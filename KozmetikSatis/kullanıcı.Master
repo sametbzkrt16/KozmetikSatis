@@ -1,0 +1,321 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="kullanıcı.master.cs" Inherits="İlkayKozmetik.kullanıcı" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>İlkay Kozmetik</title>
+<link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style>
+        /* Genel Stil Ayarları */
+/* Menü Sabitleme */
+.menu {
+    width: 100%;
+    background-color: #ff6a00;
+    padding: 0; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    position: fixed; /* Sabit yapma */
+    top: 0; /* Üstteki kenara yapıştırma */
+    left: 0;
+    z-index: 1000; /* Menü üstte kalması için */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 60px; /* Menü yüksekliği kadar üstten boşluk bırakıyoruz */
+}
+
+/* Diğer stiller (menu, logo, a tagleri vb.) aynı kalabilir */
+
+        /* Logo Stili */
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: auto;
+        }
+
+        .logo img {
+            max-height: 60px; /* Resmi çok büyük yapmamak için max-height belirleyin */
+            margin-right: 20px; /* Resim ile bağlantılar arasında mesafe */
+        }
+
+        /* Menü Link Stili */
+        .menu div {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; /* Menü öğelerinin taşmasını engellemek için */
+            justify-content: flex-end; /* Sağ tarafta hizalama */
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+
+        /* Menü Linki Hover Efekti */
+        .menu a:hover {
+            background-color: #b6ff00;
+            transform: scale(1.1);
+        }
+
+        /* İletişim Menüsü İçin Sağda Kalan Öğe */
+        .menu div:last-child {
+            margin-left: auto;
+        }
+
+        /* İçerik Konteyneri */
+        .content-container {
+            width: 100%;
+            max-width: 1400px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+        }
+
+        .portal-title {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* WhatsApp Destek Butonu */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            padding: 15px;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-5px);
+        }
+
+        .whatsapp-button i {
+            font-style: normal;
+        }
+
+        /* Responsive Ayarlar */
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+
+          .menu div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Sağ tarafta hizalama */
+}
+
+/* Menü Linkleri */
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 15px 25px; /* Padding'i biraz daha geniş tutarak tıklanabilir alanı artırıyoruz */
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 5px;
+    margin: 0; /* Menü öğeleri arasındaki mesafeyi sıfırlıyoruz */
+}
+
+/* Menü Linki Hover Efekti */
+.menu a:hover {
+    background-color: #b6ff00;
+    transform: scale(1.1);
+}
+        }
+
+          .content-container {
+        width: 100%;
+        max-width: 1400px;
+        background-color: #;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+    }
+
+    /* Portal Başlığı */
+    .portal-title {
+        font-size: 36px; /* Daha büyük bir font boyutu */
+        font-weight: bold;
+        text-align: center;
+        color: #000000; /* Renkleri biraz daha dikkat çekici yapalım */
+        margin-bottom: 20px; /* Alt boşluk */
+        letter-spacing: 2px; /* Harf aralığını açarak daha modern bir görünüm kazandıralım */
+        text-transform: uppercase; /* Yazıyı büyük harf yaparak daha etkileyici hale getirelim */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Yazıya hafif gölge ekleyelim */
+    }
+
+    /* İçerik Başlıkları */
+    .portal-title:hover {
+        color: #ff6a00; /* Hover durumunda renk değişimi */
+        transform: scale(1.05); /* Hover durumunda biraz büyüme efekti */
+        transition: all 0.3s ease;
+    }
+
+        .auto-style1 {
+            width: 124px;
+            height: 110px;
+        }
+        /* Arama Çubuğu Konteyneri */
+.search-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Arama Kutusu Stili */
+.search-box {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    margin-right: 10px; /* Arama kutusu ile buton arasında mesafe */
+}
+
+/* Arama Butonu Stili */
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff6a00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Arama Butonunun Hover Efekti */
+.search-button:hover {
+    background-color: #b6ff00;
+}
+
+/* Arama Kutusunun Mobilde Duyarlı Tasarımı */
+@media (max-width: 768px) {
+    .search-box {
+        width: 80%; /* Küçük ekranlarda kutuyu genişlet */
+    }
+}
+
+        .auto-style2 {
+            font-size: x-large;
+        }
+        .auto-style3 {
+            font-size: xx-large;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <form id="form1" runat="server">
+        <!-- Menü -->
+     
+        <div class="menu">
+            <!-- Logo -->
+            <div class="logo">
+ <div class="logo">
+     <!-- Logo -->
+<div class="logo">
+    <img src="img\kzmtk.png" alt="İlkay Kozmetik Logo" class="auto-style1" />
+</div>
+
+    </div>                &nbsp;</div>
+         <!-- Menü Linkleri -->
+<div>
+
+    <!-- Instagram Linki -->
+    <a href="https://www.instagram.com/kozmetiknb/" target="_blank">
+        <img src="img/inst.png" alt="Instagram" style="max-height: 40px; margin-right: 10px;" />
+    </a>
+    <!-- Sepet Simgesi -->
+
+<!-- Sepet İçeriği -->
+
+    <!-- Diğer Menü Linkleri -->
+    <a href="Ürünler.aspx" class="auto-style2">Ürünler</a>
+    <a href="Hakkimizda.aspx" class="auto-style3">Hakkımızda</a>
+    <a href="İletisim.aspx">İletişim</a> 
+
+</div>
+
+        </div>
+      
+
+        <!-- Portal İçeriği -->
+        <div class="content-container">
+            <div class="portal-title">Hoş Geldiniz - NB Kozmetik</div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+   
+  
+
+
+  <!-- WhatsApp Destek Butonu -->
+<a href="https://wa.me/905516918307" target="_blank" class="whatsapp-button">
+    <i>📞</i>
+</a>
+
+</html>  
+        <button id="scrollToTop">Başa Dön ↑</button>
+
+        <script>
+            window.onscroll = function () { scrollFunction() };
+
+            function scrollFunction() {
+                var button = document.getElementById("scrollToTop");
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    button.style.display = "block";
+                } else {
+                    button.style.display = "none";
+                }
+            }
+
+            document.getElementById("scrollToTop").addEventListener("click", function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    
+            });
+        </script>
